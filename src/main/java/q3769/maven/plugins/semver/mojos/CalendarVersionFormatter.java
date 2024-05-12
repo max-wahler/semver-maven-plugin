@@ -53,7 +53,7 @@ enum CalendarVersionFormatter {
      * @param original pom version
      * @param targetNormalVersion to increment
      * @return new instance incremented
-     * @throws MojoFailureException if the original version's target category version is newer than one hour from now
+     * @throws MojoFailureException if the original version's target category version is newer than now
      */
     public static Version calendarIncrement(Version original, @Nonnull SemverNormalVersion targetNormalVersion)
             throws MojoFailureException {

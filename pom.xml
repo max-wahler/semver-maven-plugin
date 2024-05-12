@@ -213,11 +213,14 @@
                 <configuration>
                     <java>
                         <palantirJavaFormat>
-                            <version>2.40.0</version>                     <!-- optional -->
-                            <style>PALANTIR</style>                       <!-- or AOSP/GOOGLE (optional) -->
+                            <version>2.46.0</version>                     <!-- optional -->
+                            <style>PALANTIR</style>
+                            <!--                            <style>GOOGLE</style>-->
+                            <!--                            <style>AOSP</style>-->
                             <formatJavadoc>true
                             </formatJavadoc>          <!-- defaults to false (optional, requires at least Palantir 2.39.0) -->
                         </palantirJavaFormat>
+                        <removeUnusedImports/>
                         <formatAnnotations/>
                     </java>
                 </configuration>
