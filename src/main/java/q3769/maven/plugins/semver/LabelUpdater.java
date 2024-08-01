@@ -32,37 +32,37 @@ import org.apache.maven.plugins.annotations.Parameter;
 /** @author Qingtian Wang */
 public abstract class LabelUpdater extends Updater {
 
-    /** If passed in, will be used to set as either one of the two SemVer labels. */
-    @Parameter(property = "set")
-    protected String set;
+  /** If passed in, will be used to set as either one of the two SemVer labels. */
+  @Parameter(property = "set")
+  protected String set;
 
-    /**
-     * @param version to increment
-     * @return incremented
-     */
-    protected abstract Version incrementLabel(Version version);
+  /**
+   * @param version to increment
+   * @return incremented
+   */
+  protected abstract Version incrementLabel(Version version);
 
-    /**
-     * @param version to be set with new label
-     * @param label new label to set
-     * @return version with newly set label
-     */
-    protected abstract Version setLabel(Version version, String label);
+  /**
+   * @param version to be set with new label
+   * @param label new label to set
+   * @return version with newly set label
+   */
+  protected abstract Version setLabel(Version version, String label);
 
-    @Override
-    protected Version update(Version original) throws MojoFailureException {
-        if (StringUtils.isBlank(set)) {
-            getLog().info("Incrementing label of version: " + original);
-            try {
-                return incrementLabel(original);
-            } catch (Exception ex) {
-                throw new MojoFailureException(
-                        "Failed to increment label of original version '" + original
-                                + "', it needs to exist and conform to SemVer format before increment",
-                        ex);
-            }
-        }
-        getLog().info("Setting label of version '" + original + "' into '" + set + "'...");
-        return setLabel(original, set);
+  @Override
+  protected Version update(Version original) throws MojoFailureException {
+    if (StringUtils.isBlank(set)) {
+      getLog().info("Incrementing label of version: " + original);
+      try {
+        return incrementLabel(original);
+      } catch (Exception ex) {
+        throw new MojoFailureException(
+            "Failed to increment label of original version '" + original
+                + "', it needs to exist and conform to SemVer format before increment",
+            ex);
+      }
     }
+    getLog().info("Setting label of version '" + original + "' into '" + set + "'...");
+    return setLabel(original, set);
+  }
 }
