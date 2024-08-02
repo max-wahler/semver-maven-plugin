@@ -60,7 +60,6 @@ class CalendarMajorTest {
     String updatedMajorText = String.valueOf(update.majorVersion());
     String originalMajorText = String.valueOf(original.majorVersion());
     assertTrue(updatedMajorText.startsWith(originalMajorText));
-    String nowHourText = String.valueOf(now.atZone(ZoneOffset.UTC).getHour());
     assertEquals(
         now.atZone(ZoneOffset.UTC).getHour(),
         Long.parseLong(updatedMajorText.substring(updatedMajorText.length() - 2)));

@@ -27,16 +27,39 @@ package q3769.maven.plugins.semver;
 import com.github.zafarkhaja.semver.Version;
 import javax.annotation.Nonnull;
 
-/** @author Qingtian Wang */
+/**
+ * Enum representing the normal version categories (MAJOR, MINOR, PATCH) of a semantic version.
+ * Provides methods to get the version number and increment the version to a target value.
+ *
+ * <p>Each enum constant overrides the methods to provide specific behavior for the respective
+ * version category.
+ *
+ * @author Qingtian Wang
+ */
 public enum SemverNormalVersion {
 
-  /** */
+  /** Major version category. */
   MAJOR {
+    /**
+     * Gets the major version number from the given semantic version.
+     *
+     * @param semver the semantic version
+     * @return the major version number
+     */
     @Override
     public long getNormalVersionNumber(Version semver) {
       return semver.majorVersion();
     }
 
+    /**
+     * Increments the major version to the specified target value.
+     *
+     * @param target the target major version number
+     * @param semver the original semantic version
+     * @return the new semantic version with the major number incremented
+     * @throws IllegalArgumentException if the original major version is already higher than the
+     *     target
+     */
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.majorVersion() >= target) {
@@ -46,13 +69,28 @@ public enum SemverNormalVersion {
     }
   },
 
-  /** */
+  /** Minor version category. */
   MINOR {
+    /**
+     * Gets the minor version number from the given semantic version.
+     *
+     * @param semver the semantic version
+     * @return the minor version number
+     */
     @Override
     public long getNormalVersionNumber(Version semver) {
       return semver.minorVersion();
     }
 
+    /**
+     * Increments the minor version to the specified target value.
+     *
+     * @param target the target minor version number
+     * @param semver the original semantic version
+     * @return the new semantic version with the minor number incremented
+     * @throws IllegalArgumentException if the original minor version is already higher than the
+     *     target
+     */
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.minorVersion() >= target) {
@@ -62,13 +100,28 @@ public enum SemverNormalVersion {
     }
   },
 
-  /** */
+  /** Patch version category. */
   PATCH {
+    /**
+     * Gets the patch version number from the given semantic version.
+     *
+     * @param semver the semantic version
+     * @return the patch version number
+     */
     @Override
     public long getNormalVersionNumber(Version semver) {
       return semver.patchVersion();
     }
 
+    /**
+     * Increments the patch version to the specified target value.
+     *
+     * @param target the target patch version number
+     * @param semver the original semantic version
+     * @return the new semantic version with the patch number incremented
+     * @throws IllegalArgumentException if the original patch version is already higher than the
+     *     target
+     */
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.patchVersion() >= target) {
@@ -78,15 +131,26 @@ public enum SemverNormalVersion {
     }
   };
 
+  /**
+   * Creates an exception indicating that the increment target is invalid.
+   *
+   * @param semverNormalVersion the version category
+   * @param target the target version number
+   * @param semver the original semantic version
+   * @return the exception to be thrown
+   */
   private static IllegalArgumentException incrementError(
       SemverNormalVersion semverNormalVersion, long target, Version semver) {
     return new IllegalArgumentException(semverNormalVersion + " version of " + semver
         + " is already higher than its increment target " + target);
   }
+
   /**
-   * @param version to check
-   * @return the normal version to which the specified semver was incremented from its previous
-   *     semver
+   * Gets the last incremented normal version category from the given semantic version.
+   *
+   * @param version the semantic version
+   * @return the last incremented normal version category
+   * @throws IllegalArgumentException if all version numbers are zero
    */
   public static @Nonnull SemverNormalVersion getLastIncrementedNormalVersion(
       @Nonnull Version version) {
@@ -107,16 +171,19 @@ public enum SemverNormalVersion {
   }
 
   /**
-   * @param semver to get category int from
-   * @return the int version of the corresponding category of the specified semver
+   * Gets the version number of the corresponding category from the given semantic version.
+   *
+   * @param semver the semantic version
+   * @return the version number of the corresponding category
    */
   public abstract long getNormalVersionNumber(Version semver);
 
   /**
-   * @param target intended target
-   * @param semver original version
-   * @return new version instance with corresponding category number incremented to the specified
-   *     target
+   * Increments the version number of the corresponding category to the specified target value.
+   *
+   * @param target the target version number
+   * @param semver the original semantic version
+   * @return the new semantic version with the version number incremented
    */
   public abstract Version incrementTo(long target, Version semver);
 }
