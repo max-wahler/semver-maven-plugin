@@ -59,7 +59,7 @@ enum CalendarVersionFormatter {
   public static Version calendarIncrement(
       Version original, @Nonnull SemverNormalVersion selectedNormalVersion)
       throws MojoFailureException {
-    long selectedNormalVersionNumber = selectedNormalVersion.getNormalVersionNumber(original);
+    long selectedNormalVersionNumber = selectedNormalVersion.getNumber(original);
     Instant now = Instant.now();
     for (CalendarVersionFormatter formatter : values()) {
       long updatedNormalVersionNumber = formatter.format(now);

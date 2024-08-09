@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
  */
 public enum SemverNormalVersion {
 
-  /** Major version category. */
+  /** Major version */
   MAJOR {
     /**
      * Gets the major version number from the given semantic version.
@@ -47,7 +47,7 @@ public enum SemverNormalVersion {
      * @return the major version number
      */
     @Override
-    public long getNormalVersionNumber(Version semver) {
+    public long getNumber(Version semver) {
       return semver.majorVersion();
     }
 
@@ -69,7 +69,7 @@ public enum SemverNormalVersion {
     }
   },
 
-  /** Minor version category. */
+  /** Minor version */
   MINOR {
     /**
      * Gets the minor version number from the given semantic version.
@@ -78,7 +78,7 @@ public enum SemverNormalVersion {
      * @return the minor version number
      */
     @Override
-    public long getNormalVersionNumber(Version semver) {
+    public long getNumber(Version semver) {
       return semver.minorVersion();
     }
 
@@ -100,7 +100,7 @@ public enum SemverNormalVersion {
     }
   },
 
-  /** Patch version category. */
+  /** Patch version */
   PATCH {
     /**
      * Gets the patch version number from the given semantic version.
@@ -109,7 +109,7 @@ public enum SemverNormalVersion {
      * @return the patch version number
      */
     @Override
-    public long getNormalVersionNumber(Version semver) {
+    public long getNumber(Version semver) {
       return semver.patchVersion();
     }
 
@@ -176,14 +176,14 @@ public enum SemverNormalVersion {
    * @param semver the semantic version
    * @return the version number of the corresponding category
    */
-  public abstract long getNormalVersionNumber(Version semver);
+  public abstract long getNumber(Version semver);
 
   /**
    * Increments the version number of the corresponding category to the specified target value.
    *
-   * @param target the target version number
-   * @param semver the original semantic version
-   * @return the new semantic version with the version number incremented
+   * @param target the target number to increment this normal version number to
+   * @param semver the original semantic version to increment
+   * @return the new semantic version with the normal version number incremented
    */
   public abstract Version incrementTo(long target, Version semver);
 }
