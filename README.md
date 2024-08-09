@@ -40,8 +40,8 @@ To include in pom.xml:
 
 ## Use it...
 
-- By default, only the parent project's version is processed, module versions are not. Use the `-DprocessModule` command
-  flag if you also wish to process modules.
+_Note:_ By default, only the parent project's version is processed, module versions are not. Use 
+the `-DprocessModule` command flag if you also wish to process modules.
 
 From CLI, assuming you are in the Maven project's default root directory where the pom.xml file is located:
 
