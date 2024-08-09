@@ -30,7 +30,7 @@
 
     <groupId>io.github.q3769</groupId>
     <artifactId>semver-maven-plugin</artifactId>
-    <version>20240116.0.202408090614</version>
+    <version>20240116.0.202408091532</version>
     <packaging>maven-plugin</packaging>
 
     <name>semver-maven-plugin</name>
@@ -214,7 +214,7 @@
                     <java>
                         <removeUnusedImports/>
                         <palantirJavaFormat>
-                            <version>2.48.0</version>
+                            <version>2.49.0</version>
                             <style>GOOGLE</style>
                             <formatJavadoc>true</formatJavadoc>
                         </palantirJavaFormat>
@@ -229,7 +229,7 @@
             <plugin>
                 <groupId>io.github.q3769</groupId>
                 <artifactId>semver-maven-plugin</artifactId>
-                <version>20240116.0.202408090614</version>
+                <version>20240116.0.202408091532</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

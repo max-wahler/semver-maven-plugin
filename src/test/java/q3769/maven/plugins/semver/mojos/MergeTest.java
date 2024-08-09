@@ -30,6 +30,7 @@ import static q3769.maven.plugins.semver.SemverNormalVersion.MINOR;
 
 import com.github.zafarkhaja.semver.Version;
 import elf4j.Logger;
+import org.apache.maven.plugin.MojoFailureException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import q3769.maven.plugins.semver.SemverNormalVersion;
@@ -42,7 +43,7 @@ class MergeTest {
   @Nested
   class update {
     @Test
-    void whenOriginalVersionIsNewer() {
+    void whenOriginalVersionIsNewer() throws MojoFailureException {
       Version original = Version.parse("1.4.0-SNAPSHOT");
       Version toMerge = Version.parse("1.3.4-hotfix");
       info.log("Merging " + toMerge + " to " + original);
@@ -56,7 +57,7 @@ class MergeTest {
     }
 
     @Test
-    void whenOriginalVersionIsOlder() {
+    void whenOriginalVersionIsOlder() throws MojoFailureException {
       Version original = Version.parse("1.2.0-pre-release.1+build.metadata");
       Version toMerge = Version.parse("1.3.4-hotfix");
       info.log("Merging " + toMerge + " to " + original);

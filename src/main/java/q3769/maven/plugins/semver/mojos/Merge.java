@@ -25,6 +25,7 @@ package q3769.maven.plugins.semver.mojos;
 
 import com.github.zafarkhaja.semver.Version;
 import lombok.NonNull;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -43,12 +44,12 @@ import q3769.maven.plugins.semver.Updater;
  */
 @Mojo(name = "merge", defaultPhase = LifecyclePhase.NONE)
 public class Merge extends Updater {
-  /** The other SemVer to be merged with current local POM's version */
+  /** The other SemVer to be merged with current local POM version */
   @Parameter(property = "semver", defaultValue = "NOT_SET")
   protected String otherSemVer;
 
   @Override
-  protected Version update(final Version original) {
+  protected Version update(final Version original) throws MojoFailureException {
     Version other = requireValidSemVer(otherSemVer);
     logDebug("Merging current POM version %s with provided version %s", original, other);
     if (original.isHigherThan(other)) {
@@ -62,7 +63,15 @@ public class Merge extends Updater {
         SemverNormalVersion.getLastIncrementedNormalVersion(original);
     logDebug(
         "Last incremented normal version of current pom semver is %s", pomIncrementedNormalVersion);
-    Version incrementedVersion = increment(other, pomIncrementedNormalVersion);
+    Version incrementedVersion;
+    try {
+      incrementedVersion = increment(other, pomIncrementedNormalVersion);
+    } catch (Exception e) {
+      throw new MojoFailureException(
+          String.format(
+              "Failed to merge the provided version %s with the POM version %s", other, original),
+          e);
+    }
     logDebug(
         "Incrementing provided version %s on POM semver incremented normal version %s, provisional merge version: %s",
         other, pomIncrementedNormalVersion, incrementedVersion);

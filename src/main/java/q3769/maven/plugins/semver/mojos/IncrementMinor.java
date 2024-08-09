@@ -24,6 +24,8 @@
 package q3769.maven.plugins.semver.mojos;
 
 import com.github.zafarkhaja.semver.Version;
+import lombok.NonNull;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import q3769.maven.plugins.semver.Updater;
@@ -37,7 +39,12 @@ import q3769.maven.plugins.semver.Updater;
 public class IncrementMinor extends Updater {
 
   @Override
-  protected Version update(Version original) {
-    return original.nextMinorVersion();
+  protected Version update(@NonNull Version original) throws MojoFailureException {
+    try {
+      return original.nextMinorVersion();
+    } catch (Exception e) {
+      throw new MojoFailureException(
+          "Failed to increment the minor version of semver " + original, e);
+    }
   }
 }

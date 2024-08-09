@@ -26,6 +26,7 @@ package q3769.maven.plugins.semver;
 
 import com.github.zafarkhaja.semver.Version;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
@@ -51,7 +52,7 @@ public abstract class LabelUpdater extends Updater {
    * @param version the semantic version to increment
    * @return the incremented semantic version
    */
-  protected abstract Version incrementLabel(Version version);
+  protected abstract Version incrementLabel(Version version) throws MojoFailureException;
 
   /**
    * Sets the label of the given semantic version to the specified value.
@@ -60,7 +61,7 @@ public abstract class LabelUpdater extends Updater {
    * @param label the new label to set
    * @return the semantic version with the newly set label
    */
-  protected abstract Version setLabel(Version version, String label);
+  protected abstract Version setLabel(Version version, String label) throws MojoFailureException;
 
   /**
    * Updates the semantic version by either incrementing or setting its label.
@@ -72,7 +73,7 @@ public abstract class LabelUpdater extends Updater {
    * @return the updated semantic version
    */
   @Override
-  protected Version update(Version original) {
+  protected Version update(Version original) throws MojoFailureException {
     if (StringUtils.isBlank(set)) {
       logInfo("Incrementing label of version: %s", original);
       return incrementLabel(original);

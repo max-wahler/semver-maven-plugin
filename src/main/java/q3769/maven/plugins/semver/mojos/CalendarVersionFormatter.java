@@ -30,7 +30,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.Nonnull;
 import lombok.NonNull;
-import org.apache.maven.plugin.MojoFailureException;
 import q3769.maven.plugins.semver.SemverNormalVersion;
 
 enum CalendarVersionFormatter {
@@ -52,13 +51,10 @@ enum CalendarVersionFormatter {
   /**
    * @param original pom version
    * @param selectedNormalVersion to increment
-   * @return new instance incremented
-   * @throws MojoFailureException if the original version's target category version is newer than
-   *     now
+   * @return new instance incremented to current date in UTC zone
    */
   public static Version calendarIncrement(
-      Version original, @Nonnull SemverNormalVersion selectedNormalVersion)
-      throws MojoFailureException {
+      Version original, @Nonnull SemverNormalVersion selectedNormalVersion) {
     long selectedNormalVersionNumber = selectedNormalVersion.getNumber(original);
     Instant now = Instant.now();
     for (CalendarVersionFormatter formatter : values()) {
@@ -67,9 +63,9 @@ enum CalendarVersionFormatter {
         return selectedNormalVersion.incrementTo(updatedNormalVersionNumber, original);
       }
     }
-    throw new MojoFailureException(new UnsupportedOperationException(String.format(
+    throw new UnsupportedOperationException(String.format(
         "%s version %s in POM semver %s is not supported for calendar style increment - it has to be older than current date in UTC zone",
-        selectedNormalVersion, selectedNormalVersionNumber, original)));
+        selectedNormalVersion, selectedNormalVersionNumber, original));
   }
 
   private DateTimeFormatter getDateTimeFormatter() {

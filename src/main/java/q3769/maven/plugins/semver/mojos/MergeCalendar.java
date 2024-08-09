@@ -63,8 +63,17 @@ public class MergeCalendar extends Updater {
         SemverNormalVersion.getLastIncrementedNormalVersion(original);
     logDebug(
         "Last incremented normal version of current pom semver is %s", pomIncrementedNormalVersion);
-    Version provisionalMergedVersion =
-        CalendarVersionFormatter.calendarIncrement(other, pomIncrementedNormalVersion);
+    Version provisionalMergedVersion;
+    try {
+      provisionalMergedVersion =
+          CalendarVersionFormatter.calendarIncrement(other, pomIncrementedNormalVersion);
+    } catch (Exception e) {
+      throw new MojoFailureException(
+          String.format(
+              "Failed to calendar-merge provided version %s with the POM version %s",
+              other, original),
+          e);
+    }
     logDebug(
         "Incrementing provided version %s on POM semver incremented normal version %s, provisional merge version: %s",
         other, pomIncrementedNormalVersion, provisionalMergedVersion);

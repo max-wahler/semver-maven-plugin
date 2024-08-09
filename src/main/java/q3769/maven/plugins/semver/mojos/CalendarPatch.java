@@ -41,6 +41,14 @@ public class CalendarPatch extends Updater {
    */
   @Override
   protected Version update(Version original) throws MojoFailureException {
-    return CalendarVersionFormatter.calendarIncrement(original, SemverNormalVersion.PATCH);
+    try {
+      return CalendarVersionFormatter.calendarIncrement(original, SemverNormalVersion.PATCH);
+    } catch (Exception e) {
+      throw new MojoFailureException(
+          String.format(
+              "Failed to increment the %s version of semver %s",
+              SemverNormalVersion.PATCH, original),
+          e);
+    }
   }
 }

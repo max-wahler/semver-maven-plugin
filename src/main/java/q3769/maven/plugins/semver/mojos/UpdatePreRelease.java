@@ -24,6 +24,7 @@
 package q3769.maven.plugins.semver.mojos;
 
 import com.github.zafarkhaja.semver.Version;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import q3769.maven.plugins.semver.LabelUpdater;
@@ -38,12 +39,20 @@ import q3769.maven.plugins.semver.LabelUpdater;
 public class UpdatePreRelease extends LabelUpdater {
 
   @Override
-  protected Version incrementLabel(Version version) {
-    return version.nextPreReleaseVersion();
+  protected Version incrementLabel(Version version) throws MojoFailureException {
+    try {
+      return version.nextPreReleaseVersion();
+    } catch (Exception e) {
+      throw new MojoFailureException("Failed to increment pre-release label for " + version, e);
+    }
   }
 
   @Override
-  protected Version setLabel(Version version, String label) {
-    return version.nextPreReleaseVersion(label);
+  protected Version setLabel(Version version, String label) throws MojoFailureException {
+    try {
+      return version.nextPreReleaseVersion(label);
+    } catch (Exception e) {
+      throw new MojoFailureException("Failed to set pre-release label for " + version, e);
+    }
   }
 }

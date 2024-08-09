@@ -24,6 +24,7 @@
 package q3769.maven.plugins.semver.mojos;
 
 import com.github.zafarkhaja.semver.Version;
+import lombok.NonNull;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import q3769.maven.plugins.semver.Updater;
@@ -39,14 +40,12 @@ public class FinalizeCurrent extends Updater {
 
   /**
    * @param original to finalize
-   * @return final SemVer version of the original, all meta info stripped
+   * @return final SemVer version of the original, all labels stripped
    */
   @Override
-  protected Version update(Version original) {
-    if (!original.preReleaseVersion().isPresent() && !original.buildMetadata().isPresent()) {
-      getLog()
-          .info("Current version: " + original
-              + " contains only normal version numbers, so no change.");
+  protected Version update(@NonNull Version original) {
+    if (original.preReleaseVersion().isEmpty() && original.buildMetadata().isEmpty()) {
+      logInfo("Current version: %s contains only normal version numbers, so no change.", original);
       return original;
     }
     return Version.of(original.majorVersion(), original.minorVersion(), original.patchVersion());

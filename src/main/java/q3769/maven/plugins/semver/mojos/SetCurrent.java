@@ -24,6 +24,7 @@
 package q3769.maven.plugins.semver.mojos;
 
 import com.github.zafarkhaja.semver.Version;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -42,7 +43,15 @@ public class SetCurrent extends Updater {
   protected String semver;
 
   @Override
-  protected Version update(Version original) {
-    return requireValidSemVer(semver);
+  protected Version update(Version original) throws MojoFailureException {
+    try {
+      return requireValidSemVer(semver);
+    } catch (Exception e) {
+      throw new MojoFailureException(
+          String.format(
+              "Failed to set the version to %s - the provided version is required to be a valid semver",
+              semver),
+          e);
+    }
   }
 }

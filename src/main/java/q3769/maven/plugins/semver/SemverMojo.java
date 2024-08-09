@@ -24,6 +24,7 @@
 package q3769.maven.plugins.semver;
 
 import com.github.zafarkhaja.semver.Version;
+import lombok.NonNull;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecution;
@@ -39,15 +40,19 @@ import org.apache.maven.project.MavenProject;
  */
 public abstract class SemverMojo extends AbstractMojo {
   private static final String FALSE = "false";
+
   /** */
   @Parameter(defaultValue = "${mojoExecution}", readonly = true)
   protected MojoExecution mojo;
+
   /** */
   @Parameter(property = "processModule", defaultValue = FALSE)
   protected String processModule;
+
   /** Current Maven POM */
   @Parameter(property = "project", defaultValue = "${project}", readonly = true, required = true)
   protected MavenProject project;
+
   /** Default session */
   @Parameter(property = "session", defaultValue = "${session}", readonly = true, required = true)
   protected MavenSession session;
@@ -56,7 +61,7 @@ public abstract class SemverMojo extends AbstractMojo {
    * @param version text that is supposed to be valid per SemVer spec
    * @return A valid SemVer
    */
-  public static Version requireValidSemVer(String version) {
+  public static @NonNull Version requireValidSemVer(String version) {
     try {
       return Version.parse(version);
     } catch (Exception ex) {
