@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.q3769/semver-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.q3769%22%20AND%20a:%22semver-maven-plugin%22)
+
 # semver-maven-plugin
 
 A [Maven Plugin](https://maven.apache.org/plugins/index.html) to update the project version in the local `pom.xml`
@@ -22,8 +24,6 @@ Notes:
 Maven 3.5.4 or better
 
 ## Get it...
-
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.q3769/semver-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.q3769%22%20AND%20a:%22semver-maven-plugin%22)
 
 To include in pom.xml:
 
