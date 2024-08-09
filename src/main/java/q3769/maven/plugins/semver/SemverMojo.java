@@ -31,8 +31,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Updates the POM file with a new SemVer version
@@ -41,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class SemverMojo extends AbstractMojo {
   private static final String FALSE = "false";
-  private static final Logger log = LoggerFactory.getLogger(SemverMojo.class);
   /** */
   @Parameter(defaultValue = "${mojoExecution}", readonly = true)
   protected MojoExecution mojo;
