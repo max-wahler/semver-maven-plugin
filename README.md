@@ -7,7 +7,7 @@ file according to the [Semantic Versioning 2.0.0](https://semver.org/) specifica
 
 ## User story
 
-As a user of this Maven Plugin, I want to update my project's version in the local pom.xml file according
+As a user of this Maven Plugin, I want to update my project's version in the local `pom.xml` file according
 to the Semantic Versioning 2.0.0 specifications, by issuing Maven commands from CLI or build script/code.
 
 _Notes:_
@@ -15,7 +15,7 @@ _Notes:_
 - Unlike some other Maven versioning plugins, this one does not try to include or combine any extra functionalities
   beyond local POM version change. In and of itself, for example, the plugin does not communicate with any version
   control system or artifact repository: It has one single concern - the project's version as defined in the local
-  pom.xml file.
+  `pom.xml` file.
 - Command-line-invokable as an atomic and composable action/step, the plugin aims to suit whatever CI/CD pipeline
   workflow one may care to set up by script/code.
 
@@ -25,25 +25,24 @@ Maven 3.5.4 or better
 
 ## Get it...
 
-To include in pom.xml:
+Include this plugin in `pom.xml`:
 
 ```
-...
 <build>
     <plugins>
         <plugin>
             <groupId>io.github.q3769</groupId>
             <artifactId>semver-maven-plugin</artifactId>
+            <version>${latest.version}</version>
         </plugin>
-...
 ```            
 
 ## Use it...
 
-_Note:_ By default, only the parent project's version is processed, module versions are not. Use 
+_Note:_ By default, only the parent project's version is processed, module versions are not. Use
 the `-DprocessModule` command flag if you also wish to process modules.
 
-From CLI, assuming you are in the Maven project's default root directory where the pom.xml file is located:
+From CLI, assuming you are in the Maven project's default root directory where the `pom.xml` file is located:
 
 ### Hard set
 
@@ -57,7 +56,7 @@ errors out because `blah` is not a valid SemVer
 mvn semver:set-current -Dsemver=1.2.3-beta
 ```
 
-sets the new value of the version element of the pom.xml file to be `1.2.3-beta`, regardless of the original value in
+sets the new value of the version element of the `pom.xml` file to be `1.2.3-beta`, regardless of the original value in
 POM
 
 ### Increment normal version number
@@ -163,7 +162,7 @@ updates `1.2.0-SNAPSHOT+chi.1` into `1.4.0-SNAPSHOT+chi.1`, where `1.2.0-SNAPSHO
 - This merge strategy is opinionated. The SemVer spec itself only defines the order of precedence among versions, and
   does not mention merging.
 
-The basic idea here is to center the merge process around the current version in the pom.xml file. I.e., the intents and
+The basic idea here is to center the merge process around the current version in the `pom.xml` file. I.e., the intents and
 purposes of the current POM version will dominate those of the given SemVer to merge.
 
 1. Take the newer between the current POM version and the given version to merge, according to the SemVer precedence.
@@ -212,6 +211,6 @@ prints confirmation message if the current version of the local POM is in valid 
 mvn semver:verify-current -Dforce-stdout -q
 ```
 
-prints the current POM version and nothing else (e.g. `1.2.3-beta.4+build.5`) in std out if it is a valid SemVer. 
-For a clean print out of the project's SemVer with nothing else, you need the `-q` or `--quiet` option to suppress 
+prints the current POM version and nothing else (e.g. `1.2.3-beta.4+build.5`) in std out if it is a valid SemVer.
+For a clean print out of the project's SemVer with nothing else, you need the `-q` or `--quiet` option to suppress
 the usual Maven messages.
