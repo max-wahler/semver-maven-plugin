@@ -81,8 +81,4 @@ public abstract class LabelUpdater extends Updater {
       return setLabel(original, set);
     }
   }
-
-  private void logInfo(String message, Object... args) {
-    getLog().info(String.format(message, args));
-  }
 }

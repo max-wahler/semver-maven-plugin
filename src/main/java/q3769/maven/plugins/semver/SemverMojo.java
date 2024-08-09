@@ -31,6 +31,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Updates the POM file with a new SemVer version
@@ -39,6 +41,7 @@ import org.apache.maven.project.MavenProject;
  */
 public abstract class SemverMojo extends AbstractMojo {
   private static final String FALSE = "false";
+  private static final Logger log = LoggerFactory.getLogger(SemverMojo.class);
   /** */
   @Parameter(defaultValue = "${mojoExecution}", readonly = true)
   protected MojoExecution mojo;
@@ -80,27 +83,23 @@ public abstract class SemverMojo extends AbstractMojo {
   public void execute() throws MojoExecutionException, MojoFailureException {
     String projectName = project.getName();
     String pomVersion = originalPomVersion();
-    getLog()
-        .info(String.format(
-            "Goal '%s' processing project '%s' with POM version '%s'...",
-            this.mojo.getGoal(), projectName, pomVersion));
+    logInfo(
+        "Goal '%s' processing project '%s' with POM version '%s'...",
+        this.mojo.getGoal(), projectName, pomVersion);
     if (project.hasParent()) {
-      getLog()
-          .info(String.format(
-              "current project %s is a module of %s",
-              projectName, project.getParent().getName()));
+      logInfo(
+          "current project %s is a module of %s",
+          projectName, project.getParent().getName());
       if (FALSE.equalsIgnoreCase(processModule)) {
-        getLog()
-            .warn(String.format(
-                "Version of module '%s' will not be processed. By default, only parent project is processed; if otherwise desired, use the `-DprocessModule` CLI flag",
-                projectName));
+        logWarn(
+            "Version of module '%s' will not be processed. By default, only parent project is processed; if otherwise desired, use the `-DprocessModule` CLI flag",
+            projectName);
         return;
       }
       if (pomVersion == null) {
-        getLog()
-            .warn(String.format(
-                "Version of module '%s' is inherited to be the same as parent '%s', thus will not be processed independently",
-                projectName, project.getParent().getName()));
+        logWarn(
+            "Version of module '%s' is inherited to be the same as parent '%s', thus will not be processed independently",
+            projectName, project.getParent().getName());
         return;
       }
     }
@@ -110,5 +109,17 @@ public abstract class SemverMojo extends AbstractMojo {
   /** @return original version in pom.xml */
   protected String originalPomVersion() {
     return project.getOriginalModel().getVersion();
+  }
+
+  protected void logWarn(String message, Object... args) {
+    getLog().warn(String.format(message, args));
+  }
+
+  protected void logInfo(String message, Object... args) {
+    getLog().info(String.format(message, args));
+  }
+
+  protected void logDebug(String message, Object... args) {
+    getLog().debug(String.format(message, args));
   }
 }

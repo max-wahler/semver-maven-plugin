@@ -54,8 +54,4 @@ public class PickNewer extends Updater {
     logDebug("CLI provided version %s is newer and being picked", otherSemVer);
     return other;
   }
-
-  private void logDebug(String message, Object... args) {
-    getLog().debug(String.format(message, args));
-  }
 }

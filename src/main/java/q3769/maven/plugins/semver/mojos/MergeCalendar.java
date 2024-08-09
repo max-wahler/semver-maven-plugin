@@ -77,8 +77,4 @@ public class MergeCalendar extends Updater {
         original, finalMergedVersion);
     return finalMergedVersion;
   }
-
-  private void logDebug(String message, Object... args) {
-    getLog().debug(String.format(message, args));
-  }
 }

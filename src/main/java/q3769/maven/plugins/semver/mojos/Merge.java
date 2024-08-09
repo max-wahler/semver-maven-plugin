@@ -88,8 +88,4 @@ public class Merge extends Updater {
             String.format("Unexpected targetNormalVersion: %s", targetNormalVersion));
     }
   }
-
-  private void logDebug(String message, Object... args) {
-    getLog().debug(String.format(message, args));
-  }
 }

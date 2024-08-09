@@ -76,7 +76,7 @@ public abstract class Updater extends SemverMojo {
           "snapshot labeling requested for updated semver %s but not honored, because snapshot flag only supports normal version number increments with no labels",
           updatedVersion));
     }
-    getLog().info(String.format("labeling version %s as a SNAPSHOT...", updatedVersion));
+    logInfo("labeling version %s as a SNAPSHOT...", updatedVersion);
     return addSnapshotLabel(updatedVersion);
   }
 
@@ -96,10 +96,9 @@ public abstract class Updater extends SemverMojo {
     String originalVersion = project.getVersion();
     String executedGoal = mojo.getGoal();
     if (newVersion.equals(originalVersion)) {
-      getLog()
-          .info(String.format(
-              "Original POM version: %s remains unchanged after executing goal: %s",
-              originalVersion, executedGoal));
+      logInfo(
+          "Original POM version: %s remains unchanged after executing goal: %s",
+          originalVersion, executedGoal);
       return;
     }
     executeMojo(
@@ -109,9 +108,8 @@ public abstract class Updater extends SemverMojo {
         configuration(
             element(name("generateBackupPoms"), "false"), element(name("newVersion"), newVersion)),
         executionEnvironment(project, session, pluginManager));
-    getLog()
-        .info(String.format(
-            "Updated original POM version: %s into: %s after executing goal: %s",
-            originalVersion, newVersion, executedGoal));
+    logInfo(
+        "Updated original POM version: %s into: %s after executing goal: %s",
+        originalVersion, newVersion, executedGoal);
   }
 }
