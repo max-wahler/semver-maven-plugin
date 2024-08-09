@@ -67,10 +67,9 @@ public class Merge extends Updater {
     try {
       incrementedVersion = increment(other, pomIncrementedNormalVersion);
     } catch (Exception e) {
-      throw new MojoFailureException(
-          String.format(
-              "Failed to merge the provided version %s with the POM version %s", other, original),
-          e);
+      logError(
+          e, "Failed to merge the provided version %s with the POM version %s", other, original);
+      throw new MojoFailureException(e);
     }
     logDebug(
         "Incrementing provided version %s on POM semver incremented normal version %s, provisional merge version: %s",

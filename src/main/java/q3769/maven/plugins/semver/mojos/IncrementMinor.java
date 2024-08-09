@@ -43,8 +43,8 @@ public class IncrementMinor extends Updater {
     try {
       return original.nextMinorVersion();
     } catch (Exception e) {
-      throw new MojoFailureException(
-          "Failed to increment the minor version of semver " + original, e);
+      logError(e, "Failed to increment the minor version of semver %s", original);
+      throw new MojoFailureException(e);
     }
   }
 }

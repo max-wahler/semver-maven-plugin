@@ -43,8 +43,8 @@ public class IncrementPatch extends Updater {
     try {
       return original.nextPatchVersion();
     } catch (Exception e) {
-      throw new MojoFailureException(
-          "Failed to increment the patch version of semver " + original, e);
+      logError(e, "Failed to increment the patch version of semver %s", original);
+      throw new MojoFailureException(e);
     }
   }
 }

@@ -113,6 +113,14 @@ public abstract class SemverMojo extends AbstractMojo {
     return project.getOriginalModel().getVersion();
   }
 
+  protected void logError(String message, Object... args) {
+    getLog().error(String.format(message, args));
+  }
+
+  protected void logError(Throwable t, String message, Object... args) {
+    getLog().error(String.format(message, args), t);
+  }
+
   protected void logWarn(String message, Object... args) {
     getLog().warn(String.format(message, args));
   }

@@ -51,7 +51,8 @@ public class UpdateBuildMetadata extends LabelUpdater {
     try {
       return version.incrementBuildMetadata();
     } catch (Exception e) {
-      throw new MojoFailureException("Failed to increment build metadata label for " + version, e);
+      logError("Failed to increment build metadata label for %s", version);
+      throw new MojoFailureException(e);
     }
   }
 
@@ -60,7 +61,8 @@ public class UpdateBuildMetadata extends LabelUpdater {
     try {
       return version.withBuildMetadata(label);
     } catch (Exception e) {
-      throw new MojoFailureException("Failed to set build metadata label for " + version, e);
+      logError(e, "Failed to set build metadata label for %s", version);
+      throw new MojoFailureException(e);
     }
   }
 }

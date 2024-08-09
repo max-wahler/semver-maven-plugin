@@ -51,11 +51,12 @@ public class CalendarMajor extends Updater {
     try {
       return CalendarVersionFormatter.calendarIncrement(original, SemverNormalVersion.MAJOR);
     } catch (Exception e) {
-      throw new MojoFailureException(
-          String.format(
-              "Failed to increment the %s version of semver %s",
-              SemverNormalVersion.MAJOR, original),
-          e);
+      logError(
+          e,
+          "Failed to calendar-increment the %s version of semver %s",
+          SemverNormalVersion.MAJOR,
+          original);
+      throw new MojoFailureException(e);
     }
   }
 }

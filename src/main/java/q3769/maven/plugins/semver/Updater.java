@@ -40,12 +40,14 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public abstract class Updater extends SemverMojo {
   private static final String SNAPSHOT = "SNAPSHOT";
+
   /**
    * Flag to append SNAPSHOT as the prerelease label in the target version. Expected to be passed in
    * as a -D parameter from CLI.
    */
   @Parameter(property = "snapshot", defaultValue = "false")
   protected boolean addingSnapshotLabel;
+
   /** */
   @Component
   protected BuildPluginManager pluginManager;
@@ -67,14 +69,17 @@ public abstract class Updater extends SemverMojo {
    * @throws MojoFailureException if original version in POM is malformed
    */
   private Version getUpdatedVersion() throws MojoFailureException {
-    Version updatedVersion = update(requireValidSemVer(project.getVersion()));
+    Version original = requireValidSemVer(project.getVersion());
+    Version updatedVersion = update(original);
     if (!addingSnapshotLabel) {
       return updatedVersion;
     }
     if (hasPreReleaseVersionOrBuildMetadata(updatedVersion)) {
-      throw new MojoFailureException(String.format(
-          "snapshot labeling requested for updated semver %s but not honored, because snapshot flag only supports normal version number increments with no labels",
-          updatedVersion));
+      logError(
+          "SNAPSHOT labeling requested for POM version %s but not honored, because SNAPSHOT may collide with other labels in the updated version %s",
+          original, updatedVersion);
+      throw new MojoFailureException(
+          String.format("SNAPSHOT may collide with other labels in %s", updatedVersion));
     }
     logInfo("labeling version %s as a SNAPSHOT...", updatedVersion);
     return addSnapshotLabel(updatedVersion);

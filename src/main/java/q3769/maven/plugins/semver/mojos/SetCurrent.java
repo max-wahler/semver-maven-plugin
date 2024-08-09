@@ -47,11 +47,11 @@ public class SetCurrent extends Updater {
     try {
       return requireValidSemVer(semver);
     } catch (Exception e) {
-      throw new MojoFailureException(
-          String.format(
-              "Failed to set the version to %s - the provided version is required to be a valid semver",
-              semver),
-          e);
+      logError(
+          e,
+          "Failed to set the version to %s - the provided version is required to be a valid semver",
+          semver);
+      throw new MojoFailureException(e);
     }
   }
 }

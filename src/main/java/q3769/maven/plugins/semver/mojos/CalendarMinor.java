@@ -44,11 +44,12 @@ public class CalendarMinor extends Updater {
     try {
       return CalendarVersionFormatter.calendarIncrement(original, SemverNormalVersion.MINOR);
     } catch (Exception e) {
-      throw new MojoFailureException(
-          String.format(
-              "Failed to increment the %s version of semver %s",
-              SemverNormalVersion.MINOR, original),
-          e);
+      logError(
+          e,
+          "Failed to calendar-increment the %s version of semver %s",
+          SemverNormalVersion.MINOR,
+          original);
+      throw new MojoFailureException(e);
     }
   }
 }

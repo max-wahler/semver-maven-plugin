@@ -52,7 +52,8 @@ public class UpdatePreRelease extends LabelUpdater {
     try {
       return version.nextPreReleaseVersion(label);
     } catch (Exception e) {
-      throw new MojoFailureException("Failed to set pre-release label for " + version, e);
+      logError(e, "Failed to set pre-release label for %s", version);
+      throw new MojoFailureException(e);
     }
   }
 }

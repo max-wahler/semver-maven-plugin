@@ -43,8 +43,8 @@ public class IncrementMajor extends Updater {
     try {
       return original.nextMajorVersion();
     } catch (Exception e) {
-      throw new MojoFailureException(
-          "Failed to increment the major version of semver " + original, e);
+      logError(e, "Failed to increment the major version of semver %s", original);
+      throw new MojoFailureException(e);
     }
   }
 }
