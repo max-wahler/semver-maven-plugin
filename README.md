@@ -1,7 +1,7 @@
 # semver-maven-plugin
 
-A [Maven Plugin](https://maven.apache.org/plugins/index.html) to update local POM version in compliance
-with [Semantic Versioning 2.0.0](https://semver.org/)
+A [Maven Plugin](https://maven.apache.org/plugins/index.html) to update the project version in the local `pom.xml`
+file according to the [Semantic Versioning 2.0.0](https://semver.org/) specification
 
 ## User story
 
