@@ -26,6 +26,7 @@ package q3769.maven.plugins.semver;
 
 import com.github.zafarkhaja.semver.Version;
 import javax.annotation.Nonnull;
+import lombok.NonNull;
 
 /**
  * Enum representing the normal version categories (MAJOR, MINOR, PATCH) of a semantic version.
@@ -63,7 +64,7 @@ public enum SemverNormalVersion {
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.majorVersion() >= target) {
-        throw incrementError(this, target, semver);
+        throw newIllegalIncrementError(this, target, semver);
       }
       return Version.of(target);
     }
@@ -94,7 +95,7 @@ public enum SemverNormalVersion {
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.minorVersion() >= target) {
-        throw SemverNormalVersion.incrementError(this, target, semver);
+        throw newIllegalIncrementError(this, target, semver);
       }
       return Version.of(semver.majorVersion(), target);
     }
@@ -125,7 +126,7 @@ public enum SemverNormalVersion {
     @Override
     public Version incrementTo(long target, Version semver) {
       if (semver.patchVersion() >= target) {
-        throw SemverNormalVersion.incrementError(this, target, semver);
+        throw newIllegalIncrementError(this, target, semver);
       }
       return Version.of(semver.majorVersion(), semver.minorVersion(), target);
     }
@@ -139,10 +140,12 @@ public enum SemverNormalVersion {
    * @param semver the original semantic version
    * @return the exception to be thrown
    */
-  private static IllegalArgumentException incrementError(
+  private static @NonNull IllegalArgumentException newIllegalIncrementError(
       SemverNormalVersion semverNormalVersion, long target, Version semver) {
-    return new IllegalArgumentException(semverNormalVersion + " version of " + semver
-        + " is already higher than its increment target " + target);
+    String errorMessage = String.format(
+        "%s version of %s is already higher than its increment target %d",
+        semverNormalVersion, semver, target);
+    return new IllegalArgumentException(errorMessage);
   }
 
   /**
