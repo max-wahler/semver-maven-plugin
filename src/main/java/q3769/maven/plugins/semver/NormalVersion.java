@@ -37,7 +37,7 @@ import lombok.NonNull;
  *
  * @author Qingtian Wang
  */
-public enum SemverNormalVersion {
+public enum NormalVersion {
 
   /** Major version */
   MAJOR {
@@ -135,16 +135,16 @@ public enum SemverNormalVersion {
   /**
    * Creates an exception indicating that the increment target is invalid.
    *
-   * @param semverNormalVersion the version category
-   * @param target the target version number
-   * @param semver the original semantic version
+   * @param normalVersion the normal version type
+   * @param target the increment target number
+   * @param semver the original semantic version to be incremented
    * @return the exception to be thrown
    */
   private static @NonNull IllegalArgumentException newIllegalIncrementError(
-      SemverNormalVersion semverNormalVersion, long target, Version semver) {
+      NormalVersion normalVersion, long target, Version semver) {
     String errorMessage = String.format(
         "%s version of %s is already higher than its increment target %d",
-        semverNormalVersion, semver, target);
+        normalVersion, semver, target);
     return new IllegalArgumentException(errorMessage);
   }
 
@@ -155,8 +155,7 @@ public enum SemverNormalVersion {
    * @return the last incremented normal version category
    * @throws IllegalArgumentException if all version numbers are zero
    */
-  public static @Nonnull SemverNormalVersion getLastIncrementedNormalVersion(
-      @Nonnull Version version) {
+  public static @Nonnull NormalVersion getLastIncrementedNormalVersion(@Nonnull Version version) {
     final long major = version.majorVersion();
     final long minor = version.minorVersion();
     final long patch = version.patchVersion();

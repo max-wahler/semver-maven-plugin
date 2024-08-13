@@ -30,7 +30,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.Nonnull;
 import lombok.NonNull;
-import q3769.maven.plugins.semver.SemverNormalVersion;
+import q3769.maven.plugins.semver.NormalVersion;
 
 enum CalendarVersionFormatter {
   TO_YEAR("yyyy"),
@@ -54,7 +54,7 @@ enum CalendarVersionFormatter {
    * @return new instance incremented to current date in UTC zone
    */
   public static Version calendarIncrement(
-      Version original, @Nonnull SemverNormalVersion selectedNormalVersion) {
+      Version original, @Nonnull NormalVersion selectedNormalVersion) {
     long selectedNormalVersionNumber = selectedNormalVersion.getNumber(original);
     Instant now = Instant.now();
     for (CalendarVersionFormatter formatter : values()) {

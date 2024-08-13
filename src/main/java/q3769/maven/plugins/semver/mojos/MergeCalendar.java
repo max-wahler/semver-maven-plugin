@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import q3769.maven.plugins.semver.SemverNormalVersion;
+import q3769.maven.plugins.semver.NormalVersion;
 import q3769.maven.plugins.semver.Updater;
 
 /**
@@ -59,8 +59,8 @@ public class MergeCalendar extends Updater {
       return original;
     }
     logDebug("Provided version %s is newer than current POM version %s", other, original);
-    SemverNormalVersion pomIncrementedNormalVersion =
-        SemverNormalVersion.getLastIncrementedNormalVersion(original);
+    NormalVersion pomIncrementedNormalVersion =
+        NormalVersion.getLastIncrementedNormalVersion(original);
     logDebug(
         "Last incremented normal version of current pom semver is %s", pomIncrementedNormalVersion);
     Version provisionalMergedVersion;

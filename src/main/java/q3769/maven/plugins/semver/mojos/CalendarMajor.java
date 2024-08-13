@@ -27,7 +27,7 @@ import com.github.zafarkhaja.semver.Version;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import q3769.maven.plugins.semver.SemverNormalVersion;
+import q3769.maven.plugins.semver.NormalVersion;
 import q3769.maven.plugins.semver.Updater;
 
 /**
@@ -49,12 +49,12 @@ public class CalendarMajor extends Updater {
   @Override
   protected Version update(Version original) throws MojoFailureException {
     try {
-      return CalendarVersionFormatter.calendarIncrement(original, SemverNormalVersion.MAJOR);
+      return CalendarVersionFormatter.calendarIncrement(original, NormalVersion.MAJOR);
     } catch (Exception e) {
       logError(
           e,
           "Failed to calendar-increment the %s version of semver %s",
-          SemverNormalVersion.MAJOR,
+          NormalVersion.MAJOR,
           original);
       throw new MojoFailureException(e);
     }

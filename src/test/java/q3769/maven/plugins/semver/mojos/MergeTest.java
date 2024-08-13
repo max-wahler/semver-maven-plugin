@@ -26,14 +26,14 @@ package q3769.maven.plugins.semver.mojos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static q3769.maven.plugins.semver.SemverNormalVersion.MINOR;
+import static q3769.maven.plugins.semver.NormalVersion.MINOR;
 
 import com.github.zafarkhaja.semver.Version;
 import elf4j.Logger;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import q3769.maven.plugins.semver.SemverNormalVersion;
+import q3769.maven.plugins.semver.NormalVersion;
 
 class MergeTest {
   static final Logger info = Logger.instance().atInfo();
@@ -63,7 +63,7 @@ class MergeTest {
       info.log("Merging " + toMerge + " to " + original);
       mergeMojo.otherSemVer = toMerge.toString();
       assertTrue(original.compareTo(toMerge) < 0);
-      assertEquals(MINOR, SemverNormalVersion.getLastIncrementedNormalVersion(original));
+      assertEquals(MINOR, NormalVersion.getLastIncrementedNormalVersion(original));
 
       Version updated = mergeMojo.update(original);
       info.log("Merge result: " + updated);
