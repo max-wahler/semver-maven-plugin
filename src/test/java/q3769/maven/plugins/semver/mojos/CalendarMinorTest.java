@@ -42,6 +42,7 @@ class CalendarMinorTest {
     Version incremented = calendarMinor.update(original);
 
     assertEquals(
-        Version.of(1, CalendarVersionFormatter.TO_YEAR.format(Instant.now()), 0), incremented);
+        Version.of(1, CalendarNormalVersionIncrementer.TO_YEAR.format(Instant.now()), 0),
+        incremented);
   }
 }

@@ -42,7 +42,7 @@ public class CalendarPatch extends Updater {
   @Override
   protected Version update(Version original) throws MojoFailureException {
     try {
-      return CalendarVersionFormatter.calendarIncrement(original, NormalVersion.PATCH);
+      return CalendarNormalVersionIncrementer.calendarIncrement(original, NormalVersion.PATCH);
     } catch (Exception e) {
       logError(
           e,

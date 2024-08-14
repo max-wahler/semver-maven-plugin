@@ -66,7 +66,7 @@ public class MergeCalendar extends Updater {
     Version provisionalMergedVersion;
     try {
       provisionalMergedVersion =
-          CalendarVersionFormatter.calendarIncrement(other, pomIncrementedNormalVersion);
+          CalendarNormalVersionIncrementer.calendarIncrement(other, pomIncrementedNormalVersion);
     } catch (Exception e) {
       logError(
           e,

@@ -27,15 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.github.zafarkhaja.semver.Version;
 import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.jupiter.api.Test;
 
 /** @author Qingtian Wang */
 class CalendarPatchTest {
-  private static final DateTimeFormatter TO_UTC_DAY_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyyMMdd").withZone(ZoneOffset.UTC);
 
   CalendarPatch calendarMinor = new CalendarPatch();
 
@@ -46,6 +42,7 @@ class CalendarPatchTest {
     Version incremented = calendarMinor.update(original);
 
     assertEquals(
-        Version.of(1, 2, CalendarVersionFormatter.TO_YEAR.format(Instant.now())), incremented);
+        Version.of(1, 2, CalendarNormalVersionIncrementer.TO_YEAR.format(Instant.now())),
+        incremented);
   }
 }

@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 import lombok.NonNull;
 import q3769.maven.plugins.semver.NormalVersion;
 
-enum CalendarVersionFormatter {
+enum CalendarNormalVersionIncrementer {
   TO_YEAR("yyyy"),
   TO_MONTH("yyyyMM"),
   TO_DAY("yyyyMMdd"),
@@ -41,11 +41,10 @@ enum CalendarVersionFormatter {
   TO_SECOND("yyyyMMddHHmmss"),
   TO_MILLISECOND("yyyyMMddHHmmssSSS");
 
-  private final String pattern;
-  private transient DateTimeFormatter dateTimeFormatter;
+  private final DateTimeFormatter dateTimeFormatter;
 
-  CalendarVersionFormatter(String pattern) {
-    this.pattern = pattern;
+  CalendarNormalVersionIncrementer(String pattern) {
+    this.dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
   }
 
   /**
@@ -57,7 +56,7 @@ enum CalendarVersionFormatter {
       Version original, @Nonnull NormalVersion selectedNormalVersion) {
     long selectedNormalVersionNumber = selectedNormalVersion.getNumber(original);
     Instant now = Instant.now();
-    for (CalendarVersionFormatter formatter : values()) {
+    for (CalendarNormalVersionIncrementer formatter : values()) {
       long updatedNormalVersionNumber = formatter.format(now);
       if (updatedNormalVersionNumber > selectedNormalVersionNumber) {
         return selectedNormalVersion.incrementTo(updatedNormalVersionNumber, original);
@@ -68,14 +67,7 @@ enum CalendarVersionFormatter {
         selectedNormalVersion, selectedNormalVersionNumber, original));
   }
 
-  private DateTimeFormatter getDateTimeFormatter() {
-    if (this.dateTimeFormatter == null) {
-      this.dateTimeFormatter = DateTimeFormatter.ofPattern(this.pattern);
-    }
-    return this.dateTimeFormatter;
-  }
-
   long format(@NonNull Instant instant) {
-    return Long.parseLong(getDateTimeFormatter().format(instant.atZone(ZoneOffset.UTC)));
+    return Long.parseLong(dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC)));
   }
 }

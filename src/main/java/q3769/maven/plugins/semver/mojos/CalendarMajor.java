@@ -49,7 +49,7 @@ public class CalendarMajor extends Updater {
   @Override
   protected Version update(Version original) throws MojoFailureException {
     try {
-      return CalendarVersionFormatter.calendarIncrement(original, NormalVersion.MAJOR);
+      return CalendarNormalVersionIncrementer.calendarIncrement(original, NormalVersion.MAJOR);
     } catch (Exception e) {
       logError(
           e,
