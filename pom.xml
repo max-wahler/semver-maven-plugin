@@ -30,7 +30,7 @@
 
     <groupId>io.github.q3769</groupId>
     <artifactId>semver-maven-plugin</artifactId>
-    <version>20240116.0.202408140342</version>
+    <version>20240116.0.202408200529-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>semver-maven-plugin</name>
@@ -234,7 +234,7 @@
             <plugin>
                 <groupId>io.github.q3769</groupId>
                 <artifactId>semver-maven-plugin</artifactId>
-                <version>20240116.0.202408140342</version>
+                <version>20240116.0.202408200529-SNAPSHOT</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -263,7 +263,7 @@
             <distributionManagement>
                 <repository>
                     <id>github</id>
-                    <name>GitHub OWNER Apache Maven Packages</name>
+                    <name>GitHub Apache Maven Packages</name>
                     <url>https://maven.pkg.github.com/q3769/semver-maven-plugin</url>
                 </repository>
             </distributionManagement>
