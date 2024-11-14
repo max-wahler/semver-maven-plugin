@@ -162,8 +162,8 @@ updates `1.2.0-SNAPSHOT+chi.1` into `1.4.0-SNAPSHOT+chi.1`, where `1.2.0-SNAPSHO
 - This merge strategy is opinionated. The SemVer spec itself only defines the order of precedence among versions, and
   does not mention merging.
 
-The basic idea here is to center the merge process around the current version in the `pom.xml` file. I.e., the intents and
-purposes of the current POM version will dominate those of the given SemVer to merge.
+The basic idea here is to center the merge process around the current version in the `pom.xml` file. I.e., the intents
+and purposes of the current POM version will dominate those of the given SemVer to merge.
 
 1. Take the newer between the current POM version and the given version to merge, according to the SemVer precedence.
 

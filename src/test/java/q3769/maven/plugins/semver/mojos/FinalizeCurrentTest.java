@@ -1,6 +1,6 @@
 package q3769.maven.plugins.semver.mojos;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.github.zafarkhaja.semver.Version;
 import org.junit.jupiter.api.Test;

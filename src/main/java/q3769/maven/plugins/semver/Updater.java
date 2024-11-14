@@ -26,11 +26,11 @@ package q3769.maven.plugins.semver;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
 import com.github.zafarkhaja.semver.Version;
+import javax.inject.Inject;
 import lombok.NonNull;
 import org.apache.maven.plugin.BuildPluginManager;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
@@ -42,15 +42,23 @@ public abstract class Updater extends SemverMojo {
   private static final String SNAPSHOT = "SNAPSHOT";
 
   /**
-   * Flag to append SNAPSHOT as the prerelease label in the target version. Expected to be passed in
-   * as a -D parameter from CLI.
+   * Flag to append SNAPSHOT as the pre-release label in the target version. Expected to be passed
+   * in as a -D parameter from CLI.
    */
   @Parameter(property = "snapshot", defaultValue = "false")
   protected boolean addingSnapshotLabel;
 
   /** */
-  @Component
+  @Inject
   protected BuildPluginManager pluginManager;
+
+  private static boolean hasPreReleaseVersionOrBuildMetadata(@NonNull Version version) {
+    return version.preReleaseVersion().isPresent() || version.buildMetadata().isPresent();
+  }
+
+  private static Version addSnapshotLabel(@NonNull Version version) {
+    return version.toBuilder().setPreReleaseVersion(SNAPSHOT).build();
+  }
 
   /**
    * @param original SemVer to be updated
@@ -83,14 +91,6 @@ public abstract class Updater extends SemverMojo {
     }
     logInfo("labeling version %s as a SNAPSHOT...", updatedVersion);
     return addSnapshotLabel(updatedVersion);
-  }
-
-  private static boolean hasPreReleaseVersionOrBuildMetadata(@NonNull Version version) {
-    return version.preReleaseVersion().isPresent() || version.buildMetadata().isPresent();
-  }
-
-  private static Version addSnapshotLabel(@NonNull Version version) {
-    return version.toBuilder().setPreReleaseVersion(SNAPSHOT).build();
   }
 
   /**
